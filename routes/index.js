@@ -27,12 +27,11 @@ router.get("/", (req, res) => {
         err: "invalid amount",
       });
     }
-    const result = (currencies[source][target] * amount)
-      .toFixed(2)
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    // 小數點四捨五入到小數點後第二位，千位數加上逗號
+    const result = Math.round(amount * currencies[source][target] * 100) / 100;
     return res.status(200).json({
       msg: "success",
-      amount: `$${result}`,
+      amount: `$${result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
     });
   } catch (err) {
     return res.status(400).json({

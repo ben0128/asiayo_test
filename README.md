@@ -48,6 +48,6 @@ GET /api?source=USD&target=JPY&amount=$1,525
 ```
 {
   "msg": "success",
-  "amount": "$170496.53"
+  "amount": "$170,496.53"
 }
 ```
