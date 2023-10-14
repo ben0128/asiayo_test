@@ -16,7 +16,7 @@
 1. 複製此儲存庫到本地：
 
     ```
-    git clone https://github.com/your-username/your-repository.git
+    git clone https://github.com/ben0128/asiayo_test.git
     ```
 
 2. 安裝依賴：
