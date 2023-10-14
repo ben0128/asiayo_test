@@ -17,6 +17,7 @@
 
     ```
     git clone https://github.com/ben0128/asiayo_test.git
+    cd asiayo_test
     ```
 
 2. 安裝依賴：
