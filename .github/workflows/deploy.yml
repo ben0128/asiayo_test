@@ -1,0 +1,20 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Run tests
+        run: npm install && npm run test
+      - name: Deploy to EC2
+        run: |
+          echo "${{ secrets.PRIVATE_KEY }}" > cicd.pem
+          chmod 600 cicd.pem
+          ssh -i "cicd.pem" ubuntu@ec2-3-87-248-233.compute-1.amazonaws.com "cd actions-runner/asiayo_test; git pull origin master; pm2 restart all"
