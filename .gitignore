@@ -7,4 +7,3 @@ node_modules
 
 # dotenv
 .env
-cicd-key.pem
