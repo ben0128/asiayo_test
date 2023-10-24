@@ -13,8 +13,10 @@ jobs:
     steps:
       - name: Checkout the files
         uses: actions/checkout@v2
+
       - name: Run Test
         run: npm install && npm run test
+
       - name: Deploy to Server 1
         uses: easingthemes/ssh-deploy@main
         env:
@@ -22,3 +24,12 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
+
+      - name: Install dependencies on EC2
+        run: |
+          ssh -i "${{ secrets.EC2_SSH_KEY }}" ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "cd ${{ secrets.TARGET_DIR }} && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && sudo apt install -y nodejs && npm install"
+      
+      - name: Start the app on EC2
+        run: |
+          ssh -i "${{ secrets.EC2_SSH_KEY }}" ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "cd ${{ secrets.TARGET_DIR }} && npm run serve"
+
