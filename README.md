@@ -1,6 +1,6 @@
 # 匯率轉換API
 
-這是一個簡單的Node.js API，用於進行匯率轉換。API使用GET請求，並根據源貨幣（`source`）、目標貨幣（`target`）和金額（`amount`）來進行轉換，並有CICD部署到AWS EC2上。
+這是一個簡單的Node.js API，用於進行匯率轉換。API使用GET請求，並根據源貨幣（`source`）、目標貨幣（`target`）和金額（`amount`）來進行轉換，並從github CICD部署到AWS EC2上。
 
 ## 開始
 
