@@ -38,7 +38,7 @@ jobs:
       
       - name: Start the app on EC2 in background
         run: |
-          ssh -i "path_to_your_private_key.pem" -o StrictHostKeyChecking=no username@your_ec2_host "cd your_project_directory && nohup npm run serve > server.log 2>&1 &"
+          ssh -i "path_to_your_private_key.pem" -o StrictHostKeyChecking=no ubuntu@ec2-54-91-10-155.compute-1.amazonaws.com "cd your_project_directory && nohup npm run serve > server.log 2>&1 &"
       - name: Post Checkout the files
         run: |
           response=$(curl -s -o /dev/null -w "%{http_code}" http://54.91.10.155:3000/)
