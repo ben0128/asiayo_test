@@ -25,11 +25,18 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
 
+      - name: Setup SSH and SCP
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+        run: |
+          echo "$PRIVATE_KEY" > private_key.pem
+          chmod 600 private_key.pem
+    
       - name: Install dependencies on EC2
         run: |
-          ssh -i "${{ secrets.EC2_SSH_KEY }}" ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "cd ${{ secrets.TARGET_DIR }} && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && sudo apt install -y nodejs && npm install"
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "cd ${{ secrets.TARGET_DIR }} && curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && sudo apt install -y nodejs && npm install"
       
       - name: Start the app on EC2
         run: |
-          ssh -i "${{ secrets.EC2_SSH_KEY }}" ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "cd ${{ secrets.TARGET_DIR }} && npm run serve"
-
+          ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "cd ${{ secrets.TARGET_DIR }} && npm run serve"
+      
