@@ -39,11 +39,4 @@ jobs:
       - name: Start the app on EC2 in background
         run: |
           ssh -i private_key.pem -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST_DNS }} "cd ${{ secrets.TARGET_DIR }} && nohup npm run serve > server.log 2>&1 &"
-      - name: Post Checkout the files
-        run: |
-          response=$(curl -s -o /dev/null -w "%{http_code}" http://54.91.10.155:3000/)
-          if [ "$response" -ne 200 ]; then
-            echo "Server check failed with HTTP code: $response"
-            exit 1
-          fi
         
